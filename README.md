@@ -8,6 +8,10 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2015/16.
 
 Analizirala bom celotni doprinos turizma BDP-ju in zaposlenosti za posamezne države. Tako bom izvedela katera država je najbolj odvisna od turizma. Prav tako pa bom analizirala vhodni turizem za posamezne države, torej kolikšno število ljudi obišče posamezno državo in s tem bom izvedela katera država je najbolj obiskana.
 
+Podatke sem dobila na:
+http://knoema.com/WTTC2015/world-travel-and-tourism-council-data-2015
+http://knoema.com/TOURISM_INBOUND/inbound-tourism
+
 
 
 ## Program
