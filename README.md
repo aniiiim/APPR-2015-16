@@ -4,10 +4,11 @@ Avtor: Anamarija Mijatović
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2015/16.
 
-## Tematika
+## Analiza gospodarskega pomena turizma in analiza najbolj obiskanih držav
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal. Tukaj boste
-napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Analizirala bom celotni doprinos turizma BDP-ju in zaposlenosti za posamezne države. Tako bom izvedela katera država je najbolj odvisna od turizma. Prav tako pa bom analizirala vhodni turizem za posamezne države, torej kolikšno število ljudi obišče posamezno državo in s tem bom izvedela katera država je najbolj obiskana.
+
+
 
 ## Program
 
