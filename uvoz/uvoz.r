@@ -1,6 +1,11 @@
 # 2. faza: Uvoz podatkov
 
+<<<<<<< HEAD
 # Funkcije, ki uvozijo podatke
+=======
+# Funkcija, ki uvozi podatke iz datoteke druzine.csv
+library(xlsx)
+>>>>>>> 75c97f41cc672a5b3132623eacd82ba1fa7f36d3
 uvozi.zaposlenost <- function() {
   return(read.table("podatki/brezposlenost.csv", sep = ";", as.is = TRUE,header = TRUE,
                       fileEncoding = "utf-8"))
@@ -13,15 +18,15 @@ uvozi.vstop <- function() {
 }
 
 
-uvozi.BDP <- read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE)
+uvozi.BDP <- function() {
+  return(read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE))}
 
 
 # Zapišimo podatke v razpredelnico.
 zaposlenost <- uvozi.zaposlenost()
 
 vstop <- uvozi.vstop()
-
-BDP <- uvozi.BDP()
+BDP<- uvozi.BDP()
 
 
 #Urejanje tabel
@@ -30,19 +35,19 @@ vstop$Unit <- NULL
 View(vstop)
 
 zaposlenost2<- zaposlenost[c("Country.Name","X2015")]
-bdp2<- uvozi.BDP[c("Country.Name","X2015")]
+bdp2<- BDP[c("Country.Name","X2015")]
 
-names(vstop)[1] <- "Država"
+names(vstop)[1] <- "Drzava"
 names(vstop)[2] <- "Datum"
 names(vstop)[3] <- "Število tujcev, ki so vstopili v državo"
 Encoding(names(vstop))<-"WINDOWS-1250"
 
-names(zaposlenost2)[1] <- "Država"
+names(zaposlenost2)[1] <- "Drzava"
 names(zaposlenost2)[2] <- "Število zaposlenih v turizmu(%)"
 Encoding(names(zaposlenost2))<-"WINDOWS-1250"
 
-names(bdp2)[1] <- "Država"
-names(bdp2)[2] <- "Delež BDP-ja ki ga predstavlja turizem (%)"
+names(bdp2)[1] <- "Drzava"
+names(bdp2)[2] <- "Delez BDP-ja ki ga predstavlja turizem (%)"
 Encoding(names(zaposlenost2))<-"WINDOWS-1250"
 
 #Filtriranje vrstic v tabeli vstop glede na leto
