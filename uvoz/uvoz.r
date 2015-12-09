@@ -1,6 +1,6 @@
 # 2. faza: Uvoz podatkov
 
-# Funkcija, ki uvozi podatke iz datoteke druzine.csv
+# Funkcije, ki uvozijo podatke
 uvozi.zaposlenost <- function() {
   return(read.table("podatki/brezposlenost.csv", sep = ";", as.is = TRUE,header = TRUE,
                       fileEncoding = "utf-8"))
@@ -16,18 +16,14 @@ uvozi.vstop <- function() {
 uvozi.BDP <- read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE)
 
 
-# Zapišimo podatke v razpredelnico druzine.
+# Zapišimo podatke v razpredelnico.
 zaposlenost <- uvozi.zaposlenost()
 
 vstop <- uvozi.vstop()
 
 BDP <- uvozi.BDP()
 
-# Če bi imeli več funkcij za uvoz in nekaterih npr. še ne bi
-# potrebovali v 3. fazi, bi bilo smiselno funkcije dati v svojo
-# datoteko, tukaj pa bi klicali tiste, ki jih potrebujemo v
-# 2. fazi. Seveda bi morali ustrezno datoteko uvoziti v prihodnjih
-# fazah.
+
 #Urejanje tabel
 vstop$variable <- NULL
 vstop$Unit <- NULL
@@ -48,3 +44,12 @@ Encoding(names(zaposlenost2))<-"WINDOWS-1250"
 names(bdp2)[1] <- "Država"
 names(bdp2)[2] <- "Delež BDP-ja ki ga predstavlja turizem (%)"
 Encoding(names(zaposlenost2))<-"WINDOWS-1250"
+
+#Filtriranje vrstic v tabeli vstop glede na leto
+vstop2006 <- vstop[vstop$Datum == "1/1/2006 12:00:00 AM",]
+vstop2007 <- vstop[vstop$Datum == "1/1/2007 12:00:00 AM",]
+vstop2008 <- vstop[vstop$Datum == "1/1/2008 12:00:00 AM",]
+vstop2009 <- vstop[vstop$Datum == "1/1/2009 12:00:00 AM",]
+vstop2010 <- vstop[vstop$Datum == "1/1/2010 12:00:00 AM",]
+vstop2011 <- vstop[vstop$Datum == "1/1/2011 12:00:00 AM",]
+vstop2012 <- vstop[vstop$Datum == "1/1/2012 12:00:00 AM",]
