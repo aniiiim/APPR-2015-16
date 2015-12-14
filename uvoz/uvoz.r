@@ -25,8 +25,6 @@ uvozi.BDP <- function() {
   return(read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE))}
 
 library(rjson)
-json_file <- "http://webonastick.com/uscl/feeds/uscl.json.txt"
-
 require(dplyr)
 require(jsonlite)
 require(RCurl)
@@ -44,7 +42,7 @@ a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
 stran <- read_html(a)
 
 drzava <- stran %>%
-  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6 sticky-table']//tr[@class='odd']//td[@class='views-field views-field-country-value']//a") %>% 
+  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tr//td[@class='views-field views-field-country-value']//") %>% 
   html_text()
 leto2011 <- stran %>%
   html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6 sticky-table']") %>%
