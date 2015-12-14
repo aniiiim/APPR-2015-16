@@ -56,8 +56,9 @@ vstop <- data.frame(Drzava=drzava, r=leto2011, t=leto2012, z=leto2013)
 names(vstop)[2] <- "Leto 2011"
 names(vstop)[3] <- "Leto 2012"
 names(vstop)[4] <- "Leto 2013"
-vstop$`Leto 2011`[vstop$`Leto 2011`=="\n "]<- NA
-vstop$`Leto 2012`[vstop$`Leto 2012`=="\n "] <- NA
+vstop$`Leto 2011`[vstop$`Leto 2011`==  vstop$`Leto 2011`[26] ]<- NA
+vstop$`Leto 2012`[vstop$`Leto 2012` == vstop$`Leto 2012`[1]] <- NA
+vstop$`Leto 2013`[vstop$`Leto 2013` == vstop$`Leto 2013`[1]] <- NA
 
 # Zapišimo podatke v razpredelnico.
 zaposlenost <- uvozi.zaposlenost()
