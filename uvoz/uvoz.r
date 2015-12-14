@@ -17,6 +17,8 @@ uvozi.vstop <- function() {
 uvozi.BDP <- function() {
   return(read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE))}
 
+library(rjson)
+json_file <- "http://webonastick.com/uscl/feeds/uscl.json.txt"
 
 # Zapišimo podatke v razpredelnico druzine.
 zaposlenost <- uvozi.zaposlenost()
