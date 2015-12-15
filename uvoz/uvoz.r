@@ -15,12 +15,6 @@ uvozi.podatke<- function() {
   return(read.table("podatki/podatki.csv", sep = ",", as.is = TRUE,header = TRUE,
                     fileEncoding = "utf-8"))}
 
-uvozi.vstop <- function() {
-  return(read.table("podatki/vstop.csv", sep = ",", as.is = TRUE,header = TRUE,
-                    fileEncoding = "utf-8"))
-}
-
-
 uvozi.BDP <- function() {
   return(read.xlsx(file = "podatki/bdp.xlsx", sheetName = "ObservationData",header=TRUE))}
 
@@ -42,34 +36,47 @@ a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
 stran <- read_html(a)
 
 drzava <- stran %>%
+<<<<<<< HEAD
   html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tr//td[@class='views-field views-field-country-value']//") %>% 
-  html_text()
-leto2011 <- stran %>%
-  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6 sticky-table']") %>%
+=======
+  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-country-value']//a") %>% 
+>>>>>>> 98c78df70510e195806804ae9a8b554037d16556
   html_text()
 
+leto2011 <- stran %>%
+  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-wbapi-data-value-2011 wbapi-data-value wbapi-data-value-first']") %>%
+  html_text()
+
+leto2012 <- stran %>%
+  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-wbapi-data-value-2012 wbapi-data-value']") %>%
+  html_text()
+  
+leto2013 <- stran %>%
+  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-wbapi-data-value-2013 wbapi-data-value wbapi-data-value-last']") %>%
+  html_text()
+  
+vstop <- data.frame(Drzava=drzava, r=leto2011, t=leto2012, z=leto2013)
+
+names(vstop)[2] <- "Leto 2011"
+names(vstop)[3] <- "Leto 2012"
+names(vstop)[4] <- "Leto 2013"
+vstop$`Leto 2011`[vstop$`Leto 2011`==  vstop$`Leto 2011`[26] ]<- NA
+vstop$`Leto 2012`[vstop$`Leto 2012` == vstop$`Leto 2012`[1]] <- NA
+vstop$`Leto 2013`[vstop$`Leto 2013` == vstop$`Leto 2013`[1]] <- NA
 
 # Zapišimo podatke v razpredelnico.
 zaposlenost <- uvozi.zaposlenost()
 
-vstop <- uvozi.vstop()
 BDP<- uvozi.BDP()
 
 podatki <- uvozi.podatke()
 
 
 #Urejanje tabel
-vstop$variable <- NULL
-vstop$Unit <- NULL
-
 
 zaposlenost<- zaposlenost[c("Country.Name","X2015")]
 BDP<- BDP[c("Country.Name","X2015")]
 
-names(vstop)[1] <- "Drzava"
-names(vstop)[2] <- "Datum"
-names(vstop)[3] <- "Število tujcev, ki so vstopili v državo"
-Encoding(names(vstop))<-"WINDOWS-1250"
 
 names(zaposlenost)[1] <- "Drzava"
 names(zaposlenost)[2] <- "Število zaposlenih v turizmu(%)"
@@ -80,20 +87,7 @@ names(BDP)[2] <- "Delez BDP-ja ki ga predstavlja turizem (%)"
 Encoding(names(BDP))<-"WINDOWS-1250"
 
 #Filtriranje vrstic v tabeli vstop glede na leto
-vstop2006 <- vstop[vstop$Datum == "1/1/2006 12:00:00 AM",]
-vstop2007 <- vstop[vstop$Datum == "1/1/2007 12:00:00 AM",]
-vstop2008 <- vstop[vstop$Datum == "1/1/2008 12:00:00 AM",]
-vstop2009 <- vstop[vstop$Datum == "1/1/2009 12:00:00 AM",]
-vstop2010 <- vstop[vstop$Datum == "1/1/2010 12:00:00 AM",]
-vstop2011 <- vstop[vstop$Datum == "1/1/2011 12:00:00 AM",]
-vstop2012 <- vstop[vstop$Datum == "1/1/2012 12:00:00 AM",]
-names(vstop2006)[3] <- "Število tujcev, ki so vstopili v državo leta 2006"
-names(vstop2007)[3] <- "Število tujcev, ki so vstopili v državo leta 2007"
-names(vstop2008)[3]<- "Število tujcev, ki so vstopili v državo leta 2008"
-names(vstop2009)[3] <- "Število tujcev, ki so vstopili v državo leta 2009"
-names(vstop2010)[3] <- "Število tujcev, ki so vstopili v državo leta 2010"
-names(vstop2011)[3] <- "Število tujcev, ki so vstopili v državo leta 2011"
-names(vstop2012)[3] <- "Število tujcev, ki so vstopili v državo leta 2012"
+
 
 tabela<-merge(BDP,zaposlenost,by.x="Drzava",by.y="Drzava",all=TRUE)
 
@@ -120,11 +114,11 @@ names(investicije_delez)[3] <- "Delež investicij v turizem (%)"
 Encoding(names(investicije_delez))<-"WINDOWS-1250"
 
 names(potrosnja_dolarji)[1] <- "Drzava"
-names(potrosnja_dolarji)[3] <- "Vrednost državne potrosnje v turizmu (bilion $)"
+names(potrosnja_dolarji)[3] <- "Vrednost drzavne potrosnje v turizmu (bilion $)"
 Encoding(names(investicije_dolarji))<-"WINDOWS-1250"
 
 names(potrosnja_delez)[1] <- "Drzava"
-names(potrosnja_delez)[3] <- "Delež državne potrosnje v turizmu (%)"
+names(potrosnja_delez)[3] <- "Delež drzavne potrosnje v turizmu (%)"
 Encoding(names(potrosnja_delez))<-"WINDOWS-1250"
 
 tabela<-merge(tabela,potrosnja_delez,by="Drzava",all=TRUE)
@@ -140,23 +134,3 @@ tabela<-merge(tabela,investicije_dolarji,by.x="Drzava",by.y="Drzava",all=TRUE)
 tabela$Unit <- NULL
 tabela$variable<- NULL
 
-
-vstop <- merge(vstop2006,vstop2007,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop <- merge(vstop,vstop2008,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop <- merge(vstop,vstop2009,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop <- merge(vstop,vstop2010,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop <- merge(vstop,vstop2011,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop <- merge(vstop,vstop2012,by="Drzava")
-vstop$Datum.x <- NULL
-vstop$Datum.y<- NULL
-vstop$Datum<- NULL
