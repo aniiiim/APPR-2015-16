@@ -130,3 +130,11 @@ tabela<-merge(tabela,investicije_dolarji,by.x="Drzava",by.y="Drzava",all=TRUE)
 tabela$Unit <- NULL
 tabela$variable<- NULL
 
+tabela <- tabela[-c(6,59,60,63,65,80,116,118,135,136,138,149,199,200,204),]
+
+
+tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` <- tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` %>% gsub("^([0-9. ]+).*", "\\1", .) %>% gsub(" ","", .) %>% as.numeric()
+#Vizulacija tabel
+require(ggplot2)
+ggplot(data=vstop, aes(x=leto2011, y=Drzava))+ geom_line()
+ggplot(data=tabela , aes(x=tabela$`Delez BDP-ja ki ga predstavlja turizem (%)`,y=tabela$Drzava))+ geom_line()
