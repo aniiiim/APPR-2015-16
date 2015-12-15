@@ -142,3 +142,5 @@ najvec_investicij_procent <- filter(tabela, tabela$`Delez investicij v turizem (
 
 Slovenija <- filter(tabela, tabela$Drzava == "Slovenia")
 Slovenija_vstop <- filter(vstop, vstop$Drzava == "Slovenia")
+
+
