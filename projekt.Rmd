@@ -47,36 +47,31 @@ kable(head(tabela))
 
 Tabela z imenom "tabela" je sestavljena iz 4 komponent, ki vplivajo na gospodarstvo posamezne države (BDP,potrošnja,investicije in zaposlenost) v odvisnosti od turizma. Vse 4 spremenljivke so izražene kot delež celotne komponente (tj. kot delež celotnega BDP-ja / potrošnje/ investicij/ zaposlenosti), zraven pa sta dodani še vrednosti državne potrošnje/ investicije v turizem v bilionih $.
 
-```{r graf1, echo=FALSE, fig.align='center', fig.cap='Države ki imajo največji delez BDP-ja ki ga predstavlja turizem (%)'}
+```{r graf1, echo=FALSE, fig.align='center', fig.cap='Drzave ki imajo največji delez BDP-ja ki ga predstavlja turizem (%)'}
 ggplot(data=najvec_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava))+ geom_point(aes(size= `Delez BDP-ja ki ga predstavlja turizem (%)`),colour="red")
 ```
 
+Iz grafa razberemo katerih 10 držav ima največji delež BDp-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem eden izmd glavnih dejavnosti.
 
-
-
-
-
-
-
-```{r graf2, echo=FALSE, fig.align='center', fig.cap='Države,ki imajo najmanjši delez BDP-ja ki ga predstavlja turizem (%)'}
+```{r graf2, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najmanjsi delez BDP-ja ki ga predstavlja turizem (%)'}
 ggplot(data=najmanj_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava)) + geom_point(aes(colour= `Delez BDP-ja ki ga predstavlja turizem (%)`),size=4)
 ```
 
-Iz 1. grafa razberemo katerih 10 držav ima največji delež BDp-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem eden izmd glavnih dejavnosti.
-Iz 2. grafa razberemo katerih 10 držav ima najmanjši delež BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
+Iz grafa razberemo katerih 10 držav ima najmanjši delez BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
 
 
-```{r graf3, echo=FALSE, fig.align='center', fig.cap='Države,ki imajo največ zaposlenih v turizmu (%)'}
+```{r graf3, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najvec zaposlenih v turizmu (%)'}
 ggplot(data=najvec_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
 ```
 
+Graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška, ki edina izmed teh 10-ih držav ni otoška država. Sejšeli so pa tisti ki so nastopili v grafu Delež BDP-ja in jih tukaj ni. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
 
-```{r graf4, echo=FALSE, fig.align='center', fig.cap='Države,ki imajo najmanj zaposlenih v turizmu (%)'}
+```{r graf4, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najmanj zaposlenih v turizmu (%)'}
 ggplot(data=najmanj_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
 
 ```
 
-Prvi graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška, ki edina izmed teh 10-ih držav ni otoška država. Sejšeli so pa tisti ki so nastopili v grafu Delež BDP-ja in jih tukaj ni. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
+
 Drugi graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
 
 
