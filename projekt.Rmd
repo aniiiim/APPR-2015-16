@@ -1,6 +1,6 @@
 ---
-title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+title: "Analiza gospodarskega pomena turizma in analiza najbolj obiskanih držav"
+author: "Anamarija Mijatović"
 output:
   pdf_document:
     latex_engine: xelatex
@@ -18,8 +18,12 @@ source("lib/libraries.r", encoding = "UTF-8")
 ```
 
 # Izbira teme
+Analiza gospodarskega pomena turizma in analiza najbolj obiskanih držav
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+Analizirala bom celotni doprinos turizma BDP-ju in zaposlenosti za posamezne države. Tako bom izvedela katera država je najbolj odvisna od turizma. Prav tako pa bom analizirala vhodni turizem za posamezne države, torej kolikšno število ljudi obišče posamezno državo in s tem bom izvedela katera država je najbolj obiskana.
+
+Podatke sem dobila na: http://knoema.com/WTTC2015/world-travel-and-tourism-council-data-2015 http://knoema.com/TOURISM_INBOUND/inbound-tourism
+http://data.worldbank.org/indicator/ST.INT.ARVL
 
 ***
 
@@ -29,14 +33,40 @@ Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Poglejmo si začetka obeh uvoženih razpredelnic.
+Uvozila sem podatke o turizmu za različne države s spletnih strani Knoema.com in WorldBank. Spremenljivko "delež zaposlenih v turizmu(%)"  sem uvozila v obliki CSV, "delež BDP-ja,ki ga predstavlja turizem" pa v obliki XLSX. Podatke o deležu in vrednosti državne potrošnje in investicij v turizem pa sem uvozila v formatu JSON. Vse te spremenljivke so shranjene v tabeli z imenom "tabela". Prav tako sem uvozila podatke o številu turistov ki so obiskali posamezno državo za leto 2011, 2012 in 2013. Te podatke sem uvozila v obliki HTML in so shranjeni v tabeli z imenom  "vstop".
+Poglejmo si začetka obeh uvoženih razpredelnic.
 
 ```{r razpredelnice}
-kable(head(druzine))
-head(obcine)
+kable(head(tabela))
+head(vstop)
 ```
 
+Tabela z imenom "tabela" je sestavljena iz 4 komponent, ki vplivajo na gospodarstvo posamezne države (BDP,potrošnja,investicije in zaposlenost) v odvisnosti od turizma. Vse 4 spremenljivke so izražene kot delež celotne komponente (tj. kot delež celotnega BDP-ja / potrošnje/ investicij/ zaposlenosti), zraven pa sta dodani še vrednosti državne potrošnje/ investicije v turizem v bilionih $.
+
+```
+ggplot(data=najvec_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava))+ geom_point(aes(size= `Delez BDP-ja ki ga predstavlja turizem (%)`),colour="red")
+
+ggplot(data=najmanj_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava))+ geom_point(aes(colour= `Delez BDP-ja ki ga predstavlja turizem (%)`),size=4)
+
+```
+Iz 1. grafa razberemo katerih 10 držav ima največji delež BDp-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem eden izmd glavnih dejavnosti.
+Iz 2. grafa razberemo katerih 10 držav ima najmanjši delež BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
+
+```
+ggplot(data=najvec_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
+
+ggplot(data=najmanj_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
+
+```
+Prvi graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška, ki edina izmed teh 10-ih držav ni otoška država. Sejšeli so pa tisti ki so nastopili v grafu Delež BDP-ja in jih tukaj ni. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
+Drugi graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
+
+```
+
+
+```
+
+Tabela vstop pa kot sem že zgoraj omenila prikazuje številu turistov ki so obiskali posamezno državo za leto 2011, 2012 in 2013.
 Slika \ref{fig:histogram} prikazuje porazdelitev števila naselij v občinah.
 
 ```{r histogram, echo=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
