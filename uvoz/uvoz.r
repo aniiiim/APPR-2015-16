@@ -36,11 +36,11 @@ a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
 stran <- read_html(a)
 
 drzava <- stran %>%
-<<<<<<< HEAD
+
   html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tr//td[@class='views-field views-field-country-value']//") %>% 
-=======
+
   html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-country-value']//a") %>% 
->>>>>>> 98c78df70510e195806804ae9a8b554037d16556
+
   html_text()
 
 leto2011 <- stran %>%
@@ -134,3 +134,5 @@ tabela<-merge(tabela,investicije_dolarji,by.x="Drzava",by.y="Drzava",all=TRUE)
 tabela$Unit <- NULL
 tabela$variable<- NULL
 
+require(ggplot2)
+ggplot(data= tabela, aes(x=D))
