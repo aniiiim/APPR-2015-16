@@ -33,7 +33,7 @@ a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
 stran <- read_html(a)
 
 drzava <- stran %>%
-  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-country-value']//a") %>% 
+ html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-country-value']//a") %>% 
   html_text()
 
 leto2011 <- stran %>%
@@ -120,6 +120,10 @@ tabela<-merge(tabela,investicije_dolarji,by.x="Drzava",by.y="Drzava",all=TRUE)
 tabela$Unit <- NULL
 tabela$variable<- NULL
 
+
+require(ggplot2)
+ggplot(data= tabela, aes(x=D))
+
 tabela <- tabela[-c(4,6,9,21,35,35,59,60,63,65,79,80,99,106,114,116,118,131,132,133,135,136,138,147,149,164,166,172,189,194,199,200,204),]
 
 tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` <- tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` %>% gsub("^([0-9. ]+).*", "\\1", .) %>% gsub(" ","", .) %>% as.numeric()
@@ -143,4 +147,7 @@ najvec_investicij_procent <- filter(tabela, tabela$`Delez investicij v turizem (
 Slovenija <- filter(tabela, tabela$Drzava == "Slovenia")
 Slovenija_vstop <- filter(vstop, vstop$Drzava == "Slovenia")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> aa57b163918644e621917be69d66597d3cae12fa

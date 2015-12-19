@@ -2,13 +2,14 @@
 title: "Analiza gospodarskega pomena turizma in analiza najbolj obiskanih držav"
 author: "Anamarija Mijatović"
 output:
+  html_document: default
   pdf_document:
-    latex_engine: xelatex
     includes:
       in_header: lib/styles.sty
+    latex_engine: xelatex
 ---
 
-```{r setup, echo=FALSE, results='hide', message=FALSE}
+```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Če želimo nastaviti pisave v PDF-ju, odkomentiramo
 # in sledimo navodilom v programu.
 #source("fontconfig.r", encoding = "UTF-8")
@@ -22,14 +23,17 @@ Analiza gospodarskega pomena turizma in analiza najbolj obiskanih držav
 
 Analizirala bom celotni doprinos turizma BDP-ju in zaposlenosti za posamezne države. Tako bom izvedela katera država je najbolj odvisna od turizma. Prav tako pa bom analizirala vhodni turizem za posamezne države, torej kolikšno število ljudi obišče posamezno državo in s tem bom izvedela katera država je najbolj obiskana.
 
-Podatke sem dobila na: http://knoema.com/WTTC2015/world-travel-and-tourism-council-data-2015 http://knoema.com/TOURISM_INBOUND/inbound-tourism
-http://data.worldbank.org/indicator/ST.INT.ARVL
+Podatke sem dobila na: 
+
+* http://knoema.com/WTTC2015/world-travel-and-tourism-council-data-2015 
+* http://knoema.com/TOURISM_INBOUND/inbound-tourism
+* http://data.worldbank.org/indicator/ST.INT.ARVL
 
 ***
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz, echo=FALSE}
+```{r uvoz, echo=FALSE, include=FALSE}
 source("uvoz/uvoz.r", encoding = "UTF-8")
 ```
 
@@ -38,34 +42,46 @@ Poglejmo si začetka obeh uvoženih razpredelnic.
 
 ```{r razpredelnice}
 kable(head(tabela))
-head(vstop)
+
 ```
 
 Tabela z imenom "tabela" je sestavljena iz 4 komponent, ki vplivajo na gospodarstvo posamezne države (BDP,potrošnja,investicije in zaposlenost) v odvisnosti od turizma. Vse 4 spremenljivke so izražene kot delež celotne komponente (tj. kot delež celotnega BDP-ja / potrošnje/ investicij/ zaposlenosti), zraven pa sta dodani še vrednosti državne potrošnje/ investicije v turizem v bilionih $.
 
-```
+```{r graf1, echo=FALSE, fig.align='center', fig.cap='Drzave ki imajo največji delez BDP-ja ki ga predstavlja turizem (%)'}
 ggplot(data=najvec_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava))+ geom_point(aes(size= `Delez BDP-ja ki ga predstavlja turizem (%)`),colour="red")
-
-ggplot(data=najmanj_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava))+ geom_point(aes(colour= `Delez BDP-ja ki ga predstavlja turizem (%)`),size=4)
-
 ```
-Iz 1. grafa razberemo katerih 10 držav ima največji delež BDp-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem eden izmd glavnih dejavnosti.
-Iz 2. grafa razberemo katerih 10 držav ima najmanjši delež BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
 
+Iz grafa razberemo katerih 10 držav ima največji delež BDp-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem eden izmd glavnih dejavnosti.
+
+```{r graf2, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najmanjsi delez BDP-ja ki ga predstavlja turizem (%)'}
+ggplot(data=najmanj_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava)) + geom_point(aes(colour= `Delez BDP-ja ki ga predstavlja turizem (%)`),size=4)
 ```
+
+Iz grafa razberemo katerih 10 držav ima najmanjši delez BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
+
+
+```{r graf3, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najvec zaposlenih v turizmu (%)'}
 ggplot(data=najvec_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
+```
 
+Graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška, ki edina izmed teh 10-ih držav ni otoška država. Sejšeli so pa tisti ki so nastopili v grafu Delež BDP-ja in jih tukaj ni. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
+
+```{r graf4, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najmanj zaposlenih v turizmu (%)'}
 ggplot(data=najmanj_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))
 
 ```
-Prvi graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška, ki edina izmed teh 10-ih držav ni otoška država. Sejšeli so pa tisti ki so nastopili v grafu Delež BDP-ja in jih tukaj ni. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
-Drugi graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
 
+<<<<<<< HEAD
 ```
 ggplot(data= najvec_investicij, aes(x=Drzava,y= ((najvec_investicij$`Vrednost investicij v turizem (bilion $)`)*10^9))) +geom_bar(stat = "identity",aes(fill=`Vrednost investicij v turizem (bilion $)`))
+=======
+
+Drugi graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
+>>>>>>> aa57b163918644e621917be69d66597d3cae12fa
 
 ggplot(data= najvec_investicij_procent, aes(x=Drzava,y= najvec_investicij_procent$`Delez investicij v turizem (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez investicij v turizem (%)`))
 
+<<<<<<< HEAD
 ggplot(data= najvec_potrosnje, aes(x=Drzava,y= ((najvec_potrosnje$`Vrednost drzavne potrosnje v turizmu (bilion $)`)*10^9))) +geom_bar(stat = "identity",aes(fill=`Vrednost drzavne potrosnje v turizmu (bilion $)`))
 
 ggplot(data= najvec_potrosnje_procent, aes(x=Drzava,y= najvec_potrosnje_procent$`Delez drzavne potrosnje v turizmu (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez drzavne potrosnje v turizmu (%)`))
@@ -74,6 +90,8 @@ V 1. grafu vidimo 10 držav, ki največjo količino denarja investirajo v turize
 2. graf nam pa kaže kolikšen procent celotnih investicij predstavljajo investicije v turizem. Največ v turizem investira otoška država Antigva in Barbuda (37.3%) za katero smo iz prejšnih grafov izvedeli, da je najbolj odvisna od turizma. Zanimivo je da so ZDA v turizem investirale 19.159.800.000 $, ampak ta denar predstavlja le 6,3% celotnih investicij. Pravtako lahko za Kitajsko vidimo da je 15.335.200.000 $ le 2,8% celotnih investicij.
 
 V zadnjih 2 grafih vidimo koliko države potrošijo denarja na turizem. Daleč največ troši ZDA in sicer 19.142.000.000$ sledi pa ji Kitajska. Največji delež potrošnje na turizem ima otoška država Antigva in Barbuda (28.8%), sledijo pa ji Kajmanski otoki (28.7%)
+=======
+>>>>>>> aa57b163918644e621917be69d66597d3cae12fa
 
 V Sloveniji predstavlja turizem 13.7% BDP-ja , 14.1% jih je zaposlenih v turizmu. Slovenija je investirala 13.9% v turizem in sicer 1.133.000.000 $
 Tabela vstop pa kot sem že zgoraj omenila prikazuje številu turistov ki so obiskali posamezno državo za leto 2011, 2012 in 2013.
@@ -84,16 +102,16 @@ Tabela vstop pa kot sem že zgoraj omenila prikazuje številu turistov ki so obi
 # Analiza in vizualizacija podatkov
 
 ```{r vizualizacija, echo=FALSE}
-source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
+#source("vizualizacija/vizualizacija.r", encoding = "UTF-8")
 ```
 
 Slika \ref{fig:zemljevid} prikazuje povprečno velikost družine za vsako občino.
 
 ```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-n <- 100
-barve <- topo.colors(n)[1+(n-1)*(druzine$povprecje-min.povprecje)/(max.povprecje-min.povprecje)]
-plot(zemljevid, col = barve)
-title("Povprečno število otrok v družini")
+#n <- 100
+#barve <- topo.colors(n)[1+(n-1)*(druzine$povprecje-min.povprecje)/(max.povprecje-min.povprecje)]
+#plot(zemljevid, col = barve)
+#title("Povprečno število otrok v družini")
 ```
 
 ***
@@ -101,20 +119,20 @@ title("Povprečno število otrok v družini")
 # Napredna analiza podatkov
 
 ```{r analiza, echo=FALSE}
-source("analiza/analiza.r", encoding = "UTF-8")
+#source("analiza/analiza.r", encoding = "UTF-8")
 ```
 
 Slika \ref{fig:graf} prikazuje povezavo med številom naselij in površino občine.
 
 ```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-plot(obcine[[1]], obcine[[4]],
-     main = "Število naselij glede na površino občine",
-     xlab = expression("Površina (km"^2 * ")"),
-     ylab = "Št. naselij",
-     col = barve[obcine[[7]]],
-     pch = 18)
-legend("topright", legend = names(barve), col = barve,
-       pch = 18, cex = 0.5, bg = "white")
+#plot(obcine[[1]], obcine[[4]],
+     #main = "Število naselij glede na površino občine",
+     #xlab = expression("Površina (km"^2 * ")"),
+     #ylab = "Št. naselij",
+     #col = barve[obcine[[7]]],
+     #pch = 18)
+#legend("topright", legend = names(barve), col = barve,
+      # pch = 18, cex = 0.5, bg = "white")
 ```
 
 ***
