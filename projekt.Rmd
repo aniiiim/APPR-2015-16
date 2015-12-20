@@ -71,30 +71,34 @@ ggplot(data=najmanj_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%
 
 ```
 
-<<<<<<< HEAD
-```
+Graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
+
+```{r graf5, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec vlozijo v turizem'}
 ggplot(data= najvec_investicij, aes(x=Drzava,y= ((najvec_investicij$`Vrednost investicij v turizem (bilion $)`)*10^9))) +geom_bar(stat = "identity",aes(fill=`Vrednost investicij v turizem (bilion $)`))
-=======
-
-Drugi graf nam prikazuje 10 držav, ki imajo najmanjši procent zaposlenih v turizmu.Tukaj pa opazimo da ni toliko držav istih kot pri grafu "najmanjši delež BDP-ja". Najmanj zaposlenih v turizmu imata Moldavija(2%) in Uzbekistan(2,5%).
->>>>>>> aa57b163918644e621917be69d66597d3cae12fa
-
-ggplot(data= najvec_investicij_procent, aes(x=Drzava,y= najvec_investicij_procent$`Delez investicij v turizem (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez investicij v turizem (%)`))
-
-<<<<<<< HEAD
-ggplot(data= najvec_potrosnje, aes(x=Drzava,y= ((najvec_potrosnje$`Vrednost drzavne potrosnje v turizmu (bilion $)`)*10^9))) +geom_bar(stat = "identity",aes(fill=`Vrednost drzavne potrosnje v turizmu (bilion $)`))
-
-ggplot(data= najvec_potrosnje_procent, aes(x=Drzava,y= najvec_potrosnje_procent$`Delez drzavne potrosnje v turizmu (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez drzavne potrosnje v turizmu (%)`))
 ```
+
+
+```{r graf6, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec investirajo v turizem (%)'}
+ggplot(data= najvec_investicij_procent, aes(x=Drzava,y= najvec_investicij_procent$`Delez investicij v turizem (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez investicij v turizem (%)`))
+```
+
 V 1. grafu vidimo 10 držav, ki največjo količino denarja investirajo v turizem. Med njimi sta daleč vodilni ZDA (leta 2015 je vložila kar 19.159.800.000 $) in Kitajska, ki je v letu 2015 investirala 15.335.200.000 $ v turizem.
 2. graf nam pa kaže kolikšen procent celotnih investicij predstavljajo investicije v turizem. Največ v turizem investira otoška država Antigva in Barbuda (37.3%) za katero smo iz prejšnih grafov izvedeli, da je najbolj odvisna od turizma. Zanimivo je da so ZDA v turizem investirale 19.159.800.000 $, ampak ta denar predstavlja le 6,3% celotnih investicij. Pravtako lahko za Kitajsko vidimo da je 15.335.200.000 $ le 2,8% celotnih investicij.
 
+```{r graf7, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec denarja potrošijo na turizem'}
+ggplot(data= najvec_potrosnje, aes(x=Drzava,y= (najvec_potrosnje$`Vrednost drzavne potrosnje v turizmu (bilion $)`)*10^9)) +geom_bar(stat = "identity",aes(fill=`Vrednost drzavne potrosnje v turizmu (bilion $)`))
+```
+
+
+```{r graf8, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najvecji procent potrosnje v turizmu (%)'}
+ggplot(data= najvec_potrosnje_procent, aes(x=Drzava,y= najvec_potrosnje_procent$`Delez drzavne potrosnje v turizmu (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez drzavne potrosnje v turizmu (%)`))
+```
+
 V zadnjih 2 grafih vidimo koliko države potrošijo denarja na turizem. Daleč največ troši ZDA in sicer 19.142.000.000$ sledi pa ji Kitajska. Največji delež potrošnje na turizem ima otoška država Antigva in Barbuda (28.8%), sledijo pa ji Kajmanski otoki (28.7%)
-=======
->>>>>>> aa57b163918644e621917be69d66597d3cae12fa
+
 
 V Sloveniji predstavlja turizem 13.7% BDP-ja , 14.1% jih je zaposlenih v turizmu. Slovenija je investirala 13.9% v turizem in sicer 1.133.000.000 $
-Tabela vstop pa kot sem že zgoraj omenila prikazuje številu turistov ki so obiskali posamezno državo za leto 2011, 2012 in 2013.
+
 
 
 ***
