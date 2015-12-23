@@ -43,6 +43,7 @@ Tabela z imenom "tabela" je sestavljena iz 3 komponent, ki vplivajo na gospodars
 
 ```{r razpredelnice}
 kable(popularne_drzave)
+kable(head(najvec_vstop2011))
 
 ```
 
@@ -85,9 +86,6 @@ kable(Slovenija)
 
 V Sloveniji predstavlja turizem 13.7% BDP-ja , 14.1% jih je zaposlenih v turizmu. Slovenija je investirala 13.9% v turizem in sicer 1.133miljard $
 
-```{r razpredelnice4}
-kable(head(vstop))
-```
 
 Opazimo da je v letih 2011,2012,2013 daleč najbolj obiskana država Francija in sicer ima vsako leto čez 80miljonov obiskovalcev,sledita ji ZDA in Kitajska kateri je leta 2013 Španija prevzela 3. mesto po obiskanosti držav.
 
