@@ -164,3 +164,21 @@ tabela <- inner_join(tabela,g)
 Slovenija <- filter(tabela, tabela$Drzava == "Slovenia")
 Slovenija_vstop <- filter(vstop, vstop$Drzava == "Slovenia")
 popularne_drzave<- filter(tabela,tabela$Drzava=="United States" | tabela$Drzava=="China" | tabela$Drzava=="Austria" | tabela$Drzava=="Slovenia" | tabela$Drzava=="France" | tabela$Drzava=="Croatia" | tabela$Drzava=="Italy" | tabela$Drzava=="Greece" | tabela$Drzava=="Spain" | tabela$Drzava=="UK")
+
+
+tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` <- tabela$`Delez BDP-ja ki ga predstavlja turizem (%)`  %>% as.numeric()
+tabela$`Potrosnja turistov(%)` <- tabela$`Potrosnja turistov(%)`  %>% as.numeric()
+tabela$`Delez investicij v turizem (%)` <- tabela$`Delez investicij v turizem (%)`  %>% as.numeric()
+tabela$`Potrosnja turistov(US $ miljarde)` <- tabela$`Potrosnja turistov(US $ miljarde)`  %>% as.numeric()
+tabela$`Vrednost investicij v turizem(US $ miljarde)` <- tabela$`Vrednost investicij v turizem(US $ miljarde)`  %>% as.numeric()
+tabela$`Število zaposlenih v turizmu(%)` <- tabela$`Število zaposlenih v turizmu(%)`  %>% as.numeric()
+
+tabela <- tabela[-c(364,365,366,591,590,589,597,596,595,594,593,592,600,599,598,342,601,602,603,222,221,220,426,425,424,405,404,403,282,281,280,341,340,354,353,352,75,74,73,141,140,139),]
+
+najvec.BDP <- filter(tabela,tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` > 20.2)
+najvec.potrosnje <- filter(tabela,tabela$Drzava=="Anguilla" | tabela$Drzava=="Cape Verde" | tabela$Drzava=="Gambia" | tabela$Drzava=="Antigua and Barbuda" | tabela$Drzava=="Bahamas")
+najvec.zaposlenost <- filter(tabela, tabela$Drzava=="UK Virgin Islands" | tabela$Drzava=="Aruba" | tabela$Drzava=="Bahamas" | tabela$Drzava=="Seychelles" | tabela$Drzava=="Maldives")
+najvec.investicij <- filter(tabela,tabela$Drzava=="United States" | tabela$Drzava== "China" | tabela$Drzava=="India" | tabela$Drzava== "Japan" | tabela$Drzava=="Brazil" )
+najvec.potrosnjev <- filter(tabela,tabela$`Potrosnja turistov(US $ miljarde)` > 45)
+najmanj.BDP <- filter(tabela, tabela$Drzava=="Uzbekistan" | tabela$Drzava=="Canada" | tabela$Drzava=="Moldova" | tabela$Drzava=="Democratic Republic of Congo" | tabela$Drzava=="Suriname")
+najvec.vstop <-filter(vstop,vstop$`Stevilo turistov` > 27437000)

@@ -67,8 +67,6 @@ kable(head(vstop))
 
 ```
 
-
-
 ***
 
 # Analiza in vizualizacija podatkov
@@ -88,52 +86,45 @@ Slika \ref{fig:zemljevid} prikazuje povprečno velikost družine za vsako občin
 
 
 ```{r graf1, echo=FALSE, fig.align='center', fig.cap='Drzave ki imajo največji delez BDP-ja ki ga predstavlja turizem (%)'}
-#ggplot(data=najvec_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem #(%)`,y=Drzava))+ geom_point(aes(size= `Delez BDP-ja ki ga predstavlja turizem #(%)`),colour="red") +xlab("Drzave") +ylab('Delež BDP-ja ki ga predstavlja turizem')
+ggplot(data=najvec.BDP , aes(Drzava,`Delez BDP-ja ki ga predstavlja turizem (%)`))+ geom_bar(stat = "identity",aes(fill=Leto),position = "dodge") +xlab("Drzave") +ylab('Delež BDP-ja ki ga predstavlja turizem')
 ```
 
-Iz grafa razberemo katerih 10 držav ima največji delež BDP-ja, ki ga predstavlja turizem. Vidimo da daleč največji delež ima otoška država v Karibih- Antigva in Barbuda. Opazimo da so to predvsem otoške države, za katere je bilo pričakovati da je turizem ena izmd glavnih dejavnosti.
+Iz grafa razberemo katerih 5 držav ima največji delež BDP-ja, ki ga predstavlja turizem. Sicer velja omeniti, da daleč največji delež je imelo posebno administrativno območje Ljudske republike Kitajske Macao, vendar sem ga odstranila iz podatkov saj ni uradno država. Iz grafa razberemo da Britanski deviški otoki, Aruba, Sejšeli, Maldivi in Bahami imajo največji delež Bdp-ja ki ga predstavlja turizem in sicer vsi imajo nad 20%. Opazimo da so to otoške države, ki so ene izmed najbolj priljubljenih turističnih destinacij.
 
-```{r graf2, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najmanjsi delez BDP-ja ki ga predstavlja turizem (%)'}
-#ggplot(data=najmanj_BDP , aes(x=`Delez BDP-ja ki ga predstavlja turizem (%)`,y=Drzava)) + geom_point(aes(colour= `Delez BDP-ja ki ga predstavlja turizem (%)`),size=4)+xlab("Drzave") +ylab('Delež BDP-ja ki ga predstavlja turizem')
+
+```{r graf2, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najvec zaposlenih v turizmu (%)'}
+ggplot(data=najvec.zaposlenost , aes(Drzava,`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Leto),position = "dodge") +xlab("Drzave") +ylab('Število zaposlenih v turizmu(%)')
 ```
 
-Iz grafa razberemo katerih 10 držav ima najmanjši delez BDP-ja, ki ga predstavlja turizem. Med njimi izstopa Demokratična republika Kongo, kjer turizem predstavlja le 1.8% BDP-ja. Opazimo da so to predvsem nerazvite države, ki imajo zelo malo stvari za ponuditi turistom.
+Graf nam prikazuje 5 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države iste kot v grafu, ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Največji procent zaposlenih imajo Britanski deviški otoki.
 
 
-```{r graf3, echo=FALSE, fig.align='center', fig.cap='Drzave,ki imajo najvec zaposlenih v turizmu (%)'}
-#ggplot(data=najvec_zaposlenih , aes(x=Drzava,y=`Število zaposlenih v turizmu(%)`))+ geom_bar(stat = "identity",aes(fill=Drzava))+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Delez zaposlenih v turizmu')
+```{r graf3, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec vlozijo v turizem'}
+ggplot(data= najvec.investicij, aes(x=Drzava,y= ((`Vrednost investicij v turizem(US $ miljarde)`)))) +geom_bar(stat = "identity",aes(fill=Leto),position = "dodge")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Vrednost investicij v turizem (US $ miljarde)')
 ```
 
-Graf nam prikazuje 10 držav, pri katerih je največji procent zaposlenih v turizmu. Opazimo da so države skoraj iste kot v grafu ki prikazuje največji delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da države, ki so najbolj odvisne od turizma in "živijo" od turizma, bode imele največ zaposlenih v turizmu. Na novo se pojavi le Hrvaška (turizem predstavlja 30.2% BDP-ja), ki edina izmed teh 10-ih držav ni otoška država. Največji procent zaposlenih imajo Bahami sledi pa jim otoška država Antigva in Barbuda. 
 
+V grafu vidimo 5 držav, ki največjo količino denarja investirajo v turizem. Med njimi sta daleč vodilni ZDA (leta 2014 je vložila kar 178.384 miljard$ ) in Kitajska, ki je v letu 2014 investirala 133.159 miljard$ v turizem.
+Iz tabele lahko razberemo da ZDA predstavlja tolikšna vsota denarja le 6.3% celotnih investicij, Kitajski pa 2.8%.
 
 ```{r graf4, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec vlozijo v turizem'}
-#ggplot(data= najvec_investicij, aes(x=Drzava,y= ((najvec_investicij$`Vrednost investicij v turizem (bilion $)`)))) +geom_bar(stat = "identity",aes(fill=`Vrednost investicij v turizem (bilion $)`))+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Vrednost investicij v turizem (bilion $)')
+ggplot(data= najvec.potrosnjev, aes(Drzava,`Potrosnja turistov(US $ miljarde)`)) +geom_bar(stat = "identity",aes(fill=Leto),position = "dodge")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Potrosnja turistov(US $ miljarde)')
 ```
 
+Iz prvega grafa vidimo v katerih državah turisti zapravijo največ denarja, med njimi daleč vodilne so ZDA.V "TOP 5" pa se še uvrščajo Kitajska, Francija, Španija in Nemčija.
 
-```{r graf5, echo=FALSE, fig.align='center', fig.cap='Drzave,ki najvec investirajo v turizem (%)'}
-#ggplot(data= najvec_investicij_procent, aes(x=Drzava,y= najvec_investicij_procent$`Delez investicij v turizem (%)`)) +geom_bar(stat = "identity",aes(fill=`Delez investicij v turizem (%)`))+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Delez investicij v turizem (%)')
+```{r graf5, echo=FALSE, fig.align='center', fig.cap='Najvec turistov'}
+ggplot(data= najvec.vstop, aes(Drzava,`Stevilo turistov`)) +geom_bar(stat = "identity",aes(fill=Leto),position = "dodge")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Stevilo turistov')
 ```
 
-V 1. grafu vidimo 10 držav, ki največjo količino denarja investirajo v turizem. Med njimi sta daleč vodilni ZDA (leta 2015 je vložila kar 191.698 miljard$ ) in Kitajska, ki je v letu 2015 investirala 153.35 miljard$ v turizem.
-2. graf nam pa kaže kolikšen procent celotnih investicij predstavljajo investicije v turizem. Največ v turizem investira otoška država Antigva in Barbuda (37.3%) za katero smo iz prejšnih grafov izvedeli, da je najbolj odvisna od turizma. Zanimivo je da so ZDA v turizem investirale 191.689miljard $, ampak ta denar predstavlja le 6,3% celotnih investicij. Pravtako lahko za Kitajsko vidimo da je 153.35miljard $ le 2,8% celotnih investicij.
+V drugem grafu pa vidimo države, ki so bile najbolj obiskane v letih 2012,2013,2014. Daleč vodilna je Francija z več kot 80 miljonov obiskovalec sledijo pa ji Španija, Kitajska, Italija in Turčija.
 
 ```{r razpredelnice2}
 kable(Slovenija)
 ```
 
 V Sloveniji predstavlja turizem 13.7% BDP-ja , 14.1% jih je zaposlenih v turizmu. Slovenija je investirala 13.9% v turizem in sicer 1.133miljard $
-
-
-Opazimo da je v letih 2011,2012,2013 daleč najbolj obiskana država Francija in sicer ima vsako leto čez 80miljonov obiskovalcev,sledita ji ZDA in Kitajska kateri je leta 2013 Španija prevzela 3. mesto po obiskanosti držav.
-
-```{r graf6, echo=FALSE, fig.align='center', fig.cap='Najvec turistov )'}
-#ggplot(data=vstop.m, aes(Drzava,value)) +geom_bar(stat = "identity",aes(fill=variable),position = "dodge") + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +xlab("Drzave") +ylab('Stevilo obiskovalcev')
-```
-
-
-V spodnji tabeli vidimo število turistov, ki so obiskali Slovenijo.
+V spodnji tabeli vidimo koliko turistov je obiskalo Slovenijo. V povprečju jo obišče letno okoli 2 miljona turistov.
 
 ```{r razpredelnice3}
 kable(Slovenija_vstop)
