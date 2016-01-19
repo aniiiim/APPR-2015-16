@@ -1,8 +1,11 @@
 # Uvoz potrebnih knjižnic
 library(sp)
 library(maptools)
+library(maps)
 library(digest)
 gpclibPermit()
+library(ggplot2)
+library(dplyr)
 
 # Funkcija uvozi.zemljevid(url, ime.zemljevida, pot.zemljevida,
 #                         encoding = "Windows-1250", force = FALSE)
@@ -103,3 +106,5 @@ preuredi <- function(podatki, zemljevid, stolpec, novi = NULL) {
   }
   return(out)
 }
+
+

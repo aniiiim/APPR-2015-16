@@ -6,11 +6,11 @@
 
 library(xlsx)
 
-uvozi.podatki <- function() {
-  return(read.table("podatki/vsi.csv", sep = ",", as.is = TRUE,header = TRUE,
+
+uvozi.pod<-function(){
+  return(read.table("podatki/ObservationData_zugbzmd.csv", sep = ",", as.is = TRUE,header = TRUE,
                     fileEncoding = "utf-8"))
 }
-
 uvozi.vstop2014 <- function(){
   return(read.table("podatki/inbound1.csv",sep =";",as.is = TRUE,header=TRUE,
                     fileEncoding = "utf-8"))
@@ -27,17 +27,6 @@ require(ggplot2)
 require(gsubfn)
 library(reshape2)
 library(tidyr)
-
-r<- GET("http://knoema.com/api/1.0/data/WTTC2015?Time=2012-2014&country=1000000,1000010,1000020,1000030,1000040,1000050,1000060,1000070,1000080,1000090,1000100,1000110,1000120,1000130,1000140,1000150,1000160,1000170,1000180,1000190,1000200,1000210,1000220,1000230,1000240,1000250,1000260,1000270,1000280,1000290,1000300,1000310,1000320,1000330,1000340,1000350,1000360,1000370,1000380,1000390,1000400,1000410,1000420,1000430,1000440,1000450,1000460,1000470,1000480,1000490,1000500,1000510,1000520,1000530,1000540,1000550,1000560,1000570,1000580,1000590,1000600,1000610,1000620,1000630,1000640,1000650,1000660,1000670,1000680,1000690,1000700,1000710,1000720,1000730,1000740,1000750,1000760,1000770,1000780,1000790,1000800,1000810,1000820,1000830,1000840,1000850,1000860,1000870,1000880,1000890,1000900,1000910,1000920,1000930,1000940,1000950,1000960,1000970,1000980,1000990,1001000,1001010,1001020,1001030,1001040,1001050,1001060,1001070,1001080,1001090,1001100,1001110,1001120,1001130,1001140,1001150,1001160,1001170,1001180,1001190,1001200,1001210,1001220,1001230,1001240,1001250,1001260,1001270,1001280,1001290,1001300,1001310,1001320,1001330,1001340,1001350,1001360,1001370,1001380,1001390,1001400,1001410,1001420,1001430,1001440,1001450,1001460,1001470,1001480,1001490,1001500,1001510,1001520,1001530,1001540,1001550,1001560,1001570,1001580,1001590,1001600,1001610,1001620,1001630,1001640,1001650,1001660,1001670,1001680,1001690,1001700,1001710,1001720,1001730,1001740,1001750,1001760,1001770,1001780,1001790,1001800,1001810,1001820,1001830,1001840,1001850,1001860,1001870,1001880,1001890,1001900,1001910,1001920,1001930,1001940,1001950,1001970,1001980,1001990,1002000,1002010&variable=1000040,1000100&measure=1000010&Frequencies=A")
-text <- content(r, "text")
-data <- fromJSON(content(r, "text"))
-investicije_potrosnja<-data$data
-investicije_potrosnja$Frequency<- NULL
-investicije_potrosnja$Scale <- NULL
-investicije_potrosnja$RegionId <- NULL
-investicije_potrosnja$measure <- NULL
-investicije_potrosnja$Unit <- NULL
-
 
 a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
 stran <- read_html(a)
@@ -63,9 +52,8 @@ vstop$`2013`[vstop$`2013` == vstop$`2013`[1]] <- NA
 
 # Zapišimo podatke v razpredelnico.
 
-podatki <- uvozi.podatki()
 vstop2014<- uvozi.vstop2014()
-
+pod <- uvozi.pod()
 #Urejanje tabel
 
 vstop2014  <- vstop2014[c("Destination","X2014")]
@@ -74,8 +62,7 @@ names(vstop2014)[2] <- "2014"
 
 vstop2014$`2014`[vstop2014$`2014`==".."] <- NA
 
-podatki$measure <- NULL
-podatki$Unit <- NULL
+pod$Unit <- NULL
 
 vstop2014$`2014` <- vstop2014$`2014` %>% gsub(",", "", .) %>% gsub(" ","", .) %>% as.numeric()
 vstop2014$`2014` <- vstop2014$`2014` *1000
@@ -98,87 +85,92 @@ vstop2014$`Drzava`[vstop2014$`Drzava`=="N. Mariana Is"] <- "Northern Mariana Isl
 vstop2014$`Drzava`[vstop2014$`Drzava`=="Rep. Moldova"] <- "Moldova"
 vstop2014$`Drzava`[vstop2014$`Drzava`=="Slovakia"] <- "Slovak Republic"
 vstop2014$`Drzava`[vstop2014$`Drzava`=="Solomon Is"] <- "Solomon Islands"
-vstop <- merge(vstop,vstop2014)
-vstop$`2014`[vstop$`2014`=="837000"]<- 83700000
-vstop$`2014`[vstop$`2014`=="16000"]<- 16000000
+vstop2014$`2014`[vstop2014$`2014`=="837000"]<- 83700000
+vstop2014$`2014`[vstop2014$`2014`=="16000"]<- 16000000
 vstop <- vstop[!is.na(vstop$`2012`),]
 vstop <- vstop[!is.na(vstop$`2013`),]
-vstop <- vstop[!is.na(vstop$`2014`),]
-vstop <- vstop %>% gather(Leto,"Stevilo turistov",-Drzava,na.rm = TRUE)
+vstop2 <- merge(vstop,vstop2014)
+vstop2 <- vstop2[!is.na(vstop2$`2014`),]
+vstop2 <- vstop2 %>% gather(Leto,"Stevilo turistov",-Drzava,na.rm = TRUE)
+pod$Date[pod$Date=="1/1/2013 12:00:00 AM"]<- 2013
+pod$Date[pod$Date=="1/1/2014 12:00:00 AM"]<- 2014
+pod$Date[pod$Date=="1/1/2012 12:00:00 AM"]<- 2012
 
-podatki$Date[podatki$Date=="1/1/2013 12:00:00 AM"]<- 2013
-podatki$Date[podatki$Date=="1/1/2014 12:00:00 AM"]<- 2014
-podatki$Date[podatki$Date=="1/1/2015 12:00:00 AM"]<- NA
-podatki$Date[podatki$Date=="1/1/2012 12:00:00 AM"]<- 2012
+pod <- pod[!is.na(pod$Date),]
 
-investicije_potrosnja$Time[investicije_potrosnja$Time=="2012-01-01T00:00:00Z"] <-2012
-investicije_potrosnja$Time[investicije_potrosnja$Time=="2013-01-01T00:00:00Z"] <-2013
-investicije_potrosnja$Time[investicije_potrosnja$Time=="2014-01-01T00:00:00Z"] <-2014
-
-
-podatki <- podatki[!is.na(podatki$Date),]
-
-b <- podatki[podatki$variable=="Travel & Tourism Direct Contribution to GDP",]
+b <- pod[pod$variable=="Travel & Tourism Direct Contribution to GDP",]
 b$variable <- NULL
 names(b)[1] <- "Drzava"
-names(b)[2] <- "Leto"
-names(b)[3] <- "Delez BDP-ja ki ga predstavlja turizem (%)"
+names(b)[3] <- "Leto"
+names(b)[4] <- "Direktni doprinos BDP-ju"
+names(b)[2] <- "enota"
 
-c <- podatki[podatki$variable=="Travel & Tourism Direct Contribution to Employment",]
+c <- pod[pod$variable=="Travel & Tourism Direct Contribution to Employment",]
 c$variable <- NULL
 names(c)[1] <- "Drzava"
-names(c)[3] <- "Število zaposlenih v turizmu(%)"
-names(c)[2] <- "Leto"
+names(c)[4] <- "Direkten doprinos zaposlenosti"
+names(c)[3] <- "Leto"
+names(c)[2] <- "enota"
 
-d <- podatki[podatki$variable=="Visitor Exports",]
+d <- pod[pod$variable=="Visitor Exports",]
 d$variable <- NULL
 names(d)[1] <- "Drzava"
-names(d)[3] <- "Potrosnja turistov(%)"
-names(d)[2] <- "Leto"
+names(d)[4] <- "Potrosnja turistov"
+names(d)[3] <- "Leto"
+names(d)[2] <- "enota"
 
-e <- podatki[podatki$variable=="Capital Investment",]
+e <- pod[pod$variable=="Capital Investment",]
 e$variable <- NULL
 names(e)[1] <- "Drzava"
-names(e)[3] <- "Delez investicij v turizem (%)"
-names(e)[2] <- "Leto"
+names(e)[4] <- "Delez investicij v turizem"
+names(e)[3] <- "Leto"
+names(e)[2] <- "enota"
 
-f <- investicije_potrosnja[investicije_potrosnja$variable=="Visitor Exports",]
+f <- pod[pod$variable=="Travel & Tourism Total Contribution to GDP",]
 f$variable <- NULL
 names(f)[1] <- "Drzava"
-names(f)[3] <- "Potrosnja turistov(US $ miljarde)"
-names(f)[2] <- "Leto"
+names(f)[3] <- "Leto"
+names(f)[4] <- "Totalni doprinos BDP-ju"
+names(f)[2] <- "enota"
 
-g <- investicije_potrosnja[investicije_potrosnja$variable=="Capital Investment",]
+g <- pod[pod$variable=="Travel & Tourism Total Contribution to Employment",]
 g$variable <- NULL
 names(g)[1] <- "Drzava"
-names(g)[3] <- "Vrednost investicij v turizem(US $ miljarde)"
-names(g)[2] <- "Leto"
+names(g)[4] <- "Totalni doprinos zaposlenosti"
+names(g)[3] <- "Leto"
+names(g)[2] <- "enota"
 
-tabela <- inner_join(b,c)
-tabela <- inner_join(tabela,d)
+tabela <- inner_join(b,f)
 tabela <- inner_join(tabela,e)
-tabela <- inner_join(tabela,f)
-tabela <- inner_join(tabela,g)
-
+tabela <- inner_join(tabela,d)
+zaposlenost <- inner_join(c,g)
 
 Slovenija <- filter(tabela, tabela$Drzava == "Slovenia")
-Slovenija_vstop <- filter(vstop, vstop$Drzava == "Slovenia")
+slozaposlenost<-filter(zaposlenost,zaposlenost$Drzava=="Slovenia")
+Slovenija_vstop <- filter(vstop2, vstop2$Drzava == "Slovenia")
 popularne_drzave<- filter(tabela,tabela$Drzava=="United States" | tabela$Drzava=="China" | tabela$Drzava=="Austria" | tabela$Drzava=="Slovenia" | tabela$Drzava=="France" | tabela$Drzava=="Croatia" | tabela$Drzava=="Italy" | tabela$Drzava=="Greece" | tabela$Drzava=="Spain" | tabela$Drzava=="UK")
 
 
-tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` <- tabela$`Delez BDP-ja ki ga predstavlja turizem (%)`  %>% as.numeric()
-tabela$`Potrosnja turistov(%)` <- tabela$`Potrosnja turistov(%)`  %>% as.numeric()
-tabela$`Delez investicij v turizem (%)` <- tabela$`Delez investicij v turizem (%)`  %>% as.numeric()
-tabela$`Potrosnja turistov(US $ miljarde)` <- tabela$`Potrosnja turistov(US $ miljarde)`  %>% as.numeric()
-tabela$`Vrednost investicij v turizem(US $ miljarde)` <- tabela$`Vrednost investicij v turizem(US $ miljarde)`  %>% as.numeric()
-tabela$`Število zaposlenih v turizmu(%)` <- tabela$`Število zaposlenih v turizmu(%)`  %>% as.numeric()
+tabela$`Direktni doprinos BDP-ju` <- tabela$`Direktni doprinos BDP-ju`  %>% as.numeric()
+tabela$`Totalni doprinos BDP-ju` <- tabela$`Totalni doprinos BDP-ju`  %>% as.numeric()
+tabela$`Potrosnja turistov` <- tabela$`Potrosnja turistov`  %>% as.numeric()
+tabela$`Delez investicij v turizem` <- tabela$`Delez investicij v turizem`  %>% as.numeric()
 
-tabela <- tabela[-c(364,365,366,591,590,589,597,596,595,594,593,592,600,599,598,342,601,602,603,222,221,220,426,425,424,405,404,403,282,281,280,341,340,354,353,352,75,74,73,141,140,139),]
+tabela <- tabela[-c(1182,1181,1180,1194,1193,1192,1200,1199,1198,1188,1187,1186,156,155,154,684,683,682,288,287,286,708,707,706,1206,1205,1204,444,443,442,852,851,850,564,563,562,810,809,808,756,755,754,924,648,647,646,923,922,720,719,718,717,716,715,783,782,781,1132),]
 
-najvec.BDP <- filter(tabela,tabela$`Delez BDP-ja ki ga predstavlja turizem (%)` > 20.2)
-najvec.potrosnje <- filter(tabela,tabela$Drzava=="Anguilla" | tabela$Drzava=="Cape Verde" | tabela$Drzava=="Gambia" | tabela$Drzava=="Antigua and Barbuda" | tabela$Drzava=="Bahamas")
-najvec.zaposlenost <- filter(tabela, tabela$Drzava=="UK Virgin Islands" | tabela$Drzava=="Aruba" | tabela$Drzava=="Bahamas" | tabela$Drzava=="Seychelles" | tabela$Drzava=="Maldives")
-najvec.investicij <- filter(tabela,tabela$Drzava=="United States" | tabela$Drzava== "China" | tabela$Drzava=="India" | tabela$Drzava== "Japan" | tabela$Drzava=="Brazil" )
-najvec.potrosnjev <- filter(tabela,tabela$`Potrosnja turistov(US $ miljarde)` > 45)
-najmanj.BDP <- filter(tabela, tabela$Drzava=="Uzbekistan" | tabela$Drzava=="Canada" | tabela$Drzava=="Moldova" | tabela$Drzava=="Democratic Republic of Congo" | tabela$Drzava=="Suriname")
-najvec.vstop <-filter(vstop,vstop$`Stevilo turistov` > 27437000)
+procenti<- filter(tabela,tabela$enota=="% share")
+procenti<-procenti[-c(361,362,363,8,7,9,70,71,72),]
+vrednost<- filter(tabela,tabela$enota=="US$ bn")
+zaposlenostp<-filter(zaposlenost,zaposlenost$enota=="% share")
+zaposlenostv<-filter(zaposlenost,zaposlenost$enota=="US$ bn")
+
+najvec.BDPtotalni <- filter(procenti,procenti$Drzava=="Vanuatu" | procenti$Drzava=="Maldives" | procenti$Drzava=="Aruba" | procenti$Drzava=="Antigua and Barbuda" | procenti$Drzava=="Seychelles")
+najvec.BDPdirektni<- filter(procenti,procenti$`Direktni doprinos BDP-ju`>16.8)
+
+
+najvec.potrosnjep <- filter(tabela,tabela$Drzava=="Anguilla" | tabela$Drzava=="Cape Verde" | tabela$Drzava=="Gambia" | tabela$Drzava=="Antigua and Barbuda" | tabela$Drzava=="Bahamas")
+najvec.investicij <- filter(vrednost,vrednost$Drzava=="United States" | vrednost$Drzava== "China" | vrednost$Drzava=="India" | vrednost$Drzava== "Japan" | vrednost$Drzava=="Brazil" )
+najvec.potrosnjev <- filter(vrednost,vrednost$`Potrosnja turistov` > 44.480)
+najvec.zaposlenostd <- filter(zaposlenostp, zaposlenostp$Drzava=="UK Virgin Islands" | zaposlenostp$Drzava=="Aruba" | zaposlenostp$Drzava=="Bahamas" | zaposlenostp$Drzava=="Seychelles" | zaposlenostp$Drzava=="Macau")
+najvec.zaposlenostt <- filter(zaposlenostp, zaposlenostp$Drzava=="Antigua and Barbuda" | zaposlenostp$Drzava=="Aruba" | zaposlenostp$Drzava=="Bahamas" | zaposlenostp$Drzava=="Seychelles" | zaposlenostp$Drzava=="Vanuatu")
+najvec.vstop <-filter(vstop2,vstop2$`Stevilo turistov` > 27437000)
