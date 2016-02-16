@@ -1,0 +1,460 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textbf{{#1}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={Anamarija Mijatovic},
+            pdftitle={Analiza gospodarskega pomena turizma in analiza najbolj obiskanih drzav},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Analiza gospodarskega pomena turizma in analiza najbolj obiskanih drzav}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Anamarija Mijatovic}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+\usepackage[slovene]{babel}
+\usepackage{graphicx}
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Analiza gospodarskega pomena turizma in analiza najbolj
+obiskanih
+držav}\label{analiza-gospodarskega-pomena-turizma-in-analiza-najbolj-obiskanih-drzav}
+
+Analizirala bom celotni doprinos turizma BDP-ju in zaposlenosti za
+posamezne države. Tako bom izvedela katera država je najbolj odvisna od
+turizma. Prav tako pa bom analizirala vhodni turizem za posamezne
+države, torej kolikšno število ljudi je obiskalo posamezno državo in s
+tem bom izvedela katera država je najbolj obiskana.
+
+Podatke sem dobila na:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \url{http://knoema.com/WTTC2015/world-travel-and-tourism-council-data-2015}
+\item
+  \url{http://knoema.com/TOURISM_INBOUND/inbound-tourism}
+\item
+  \url{http://data.worldbank.org/indicator/ST.INT.ARVL}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Obdelava, uvoz in čiščenje
+podatkov}\label{obdelava-uvoz-in-ciscenje-podatkov}
+
+Uvozila sem podatke o turizmu za različne države s spletnih strani
+Knoema.com in WorldBank. Tabelo, ki prikazuje doprinos BDP-ju in tabelo,
+ki prikazuje doprinos turizmu sem uvozila kot CSV. Druga tabela nam
+prikazuje število turistov, ki so obiskali posamezno državo v letih
+2012,2013 in 2014. Podatke za 2014 sem uvozila kot CSV, za leti 2012 in
+2013 pa kot HTML s spletne strani WorldBank-a.
+
+Iz uvoženih tabel sem izbrisala nepotrebne stolpce, stolpce preimenovala
+v slovenščino, spremenila vrednosti praznih nizov v NA, tako da sm na
+koncu dobile tri urejene tabele, ki imajo takšne stolpce:
+
+Prva tabela:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Drzava
+\item
+  enota (vrednosti so izražene v procentih ali US\$ bn)
+\item
+  Leto (podatki so za leta 2012,2013,2014)
+\item
+  Direktni doprinos BDP-ju
+\item
+  Totalni doprinos BDP-ju
+\item
+  Delez investicij v turizem
+\item
+  Potrosnja turistov
+\end{itemize}
+
+Druga tabela:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Drzava
+\item
+  enota (vrednosti so izražene v procentih ali tisočih)
+\item
+  Leto (podatki so za leta 2012,2013,2014)
+\item
+  Direkten doprinos zaposlenosti
+\item
+  Totalni doprinos zaposlenosti
+\end{itemize}
+
+Tretja tabela:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Drzava
+\item
+  Leto (podatki so za leta 2012,2013,2014)
+\item
+  Stevilo turistov
+\end{itemize}
+
+Oglejmo si kako izgledajo tabele:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(tabela))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}lllrrrr@{}}
+\toprule
+Drzava & enota & Leto & Direktni doprinos BDP-ju & Totalni doprinos
+BDP-ju & Delez investicij v turizem & Potrosnja turistov\tabularnewline
+\midrule
+\endhead
+Slovenia & \% share & 2012 & 3.500 & 12.800 & 13.000 &
+7.800\tabularnewline
+Slovenia & \% share & 2013 & 3.600 & 13.200 & 13.600 &
+8.100\tabularnewline
+Slovenia & \% share & 2014 & 3.700 & 13.600 & 13.900 &
+8.300\tabularnewline
+Slovenia & US\$ bn & 2012 & 1.638 & 5.967 & 1.051 & 2.699\tabularnewline
+Slovenia & US\$ bn & 2013 & 1.690 & 6.116 & 1.063 & 2.843\tabularnewline
+Slovenia & US\$ bn & 2014 & 1.713 & 6.187 & 1.086 & 2.938\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(zaposlenost))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}lllrr@{}}
+\toprule
+Drzava & enota & Leto & Direkten doprinos zaposlenosti & Totalni
+doprinos zaposlenosti\tabularnewline
+\midrule
+\endhead
+Slovenia & \% share & 2012 & 3.9 & 13.1\tabularnewline
+Slovenia & \% share & 2013 & 4.0 & 13.5\tabularnewline
+Slovenia & \% share & 2014 & 4.2 & 13.9\tabularnewline
+Slovenia & thousands & 2012 & 31.5 & 105.7\tabularnewline
+Slovenia & thousands & 2013 & 32.5 & 108.1\tabularnewline
+Slovenia & thousands & 2014 & 33.7 & 111.3\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{head}\NormalTok{(vstop2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}llr@{}}
+\toprule
+Drzava & Leto & Stevilo turistov\tabularnewline
+\midrule
+\endhead
+Armenia & 2012 & 963000\tabularnewline
+Australia & 2012 & 6032000\tabularnewline
+Austria & 2012 & 24151000\tabularnewline
+Azerbaijan & 2012 & 1986000\tabularnewline
+Belarus & 2012 & 119000\tabularnewline
+Belgium & 2012 & 7560000\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Analiza in vizualizacija
+podatkov}\label{analiza-in-vizualizacija-podatkov}
+
+\begin{verbatim}
+## Regions defined for each Polygons
+## Regions defined for each Polygons
+\end{verbatim}
+
+\includegraphics{projekt_files/figure-latex/zemljevid1-1.pdf}
+
+Zemljevid prikazuje Evropo, z barvo je označen totalni doprinos BDP-ju
+od turizma. Vidimo da največji delež ima Hrvaška, sledijo pa ji Črna
+gora, Islandija, Španija in Grčija.
+
+\textbackslash{}begin\{figure\}
+
+\{\centering \includegraphics{projekt_files/figure-latex/graf1-1}
+
+\}
+
+\textbackslash{}caption\{Drzave ki imajo največji delez BDP-ja ki ga
+predstavlja turizem (\%)\}\label{fig:graf1}
+\textbackslash{}end\{figure\}
+
+Iz grafa razberemo da Aruba, Antigva in Barbuda, Sejšeli, Vanatu in
+Maldivi in imajo največji totalni doprinos BDP-ju in sicer vse države
+imajo okoli 50\%. Opazimo da so to predvsem otoške države, za katere je
+znažilno da so najbolj odvisne od turizma in da jim je turizem glavna
+gospodarka aktivnost.
+
+\begin{figure}
+
+{\centering \includegraphics{projekt_files/figure-latex/graf2-1} 
+
+}
+
+\caption{Totalni doprinos BDP-ju}\label{fig:graf2}
+\end{figure}
+
+V tem grafu pa je prikazan direktni doprinos turizma BDP-ju. Vidimo da
+so države iste kot v prejšnem grafu, na novo so le Bahami. Razlika med
+direktnim in totalni doprinosom turizma je, da direktni doprinos
+upošteva le dohodke, ki jih direktno porabijo turisti (za plačanje
+hotelov, nakupi suvenirjev, plačilo v restevracijah,itd.) v državi.
+Totalni doprinos pa upošteva še davke in dajatve na izdatke in storitve,
+ki jih uporabljajo turisti. Totalni doprinos je bolj pomemben za
+analiziranje odviisnosti države od turizma, saj vključuje vse prihodke s
+strani turizma.
+
+\begin{figure}
+
+{\centering \includegraphics{projekt_files/figure-latex/graf3-1} 
+
+}
+
+\caption{Doprinos zaposlenosti}\label{fig:graf3}
+\end{figure}
+
+Graf nam prikazuje 5 držav, pri katerih je največji procent zaposlenih v
+turizmu. Opazimo da so države iste kot v grafu, ki prikazuje največji
+delež BDP-ja. To smo na nek način tudi pričakovali, saj je logično da
+države, ki so najbolj odvisne od turizma in ``živijo'' od turizma, bode
+imele največ zaposlenih v turizmu. Največji procent zaposlenih ima tako
+kot pri BDP-ju Aruba.
+
+\begin{figure}
+
+{\centering \includegraphics{projekt_files/figure-latex/graf5-1} 
+
+}
+
+\caption{Drzave,ki najvec vlozijo v turizem}\label{fig:graf5}
+\end{figure}
+
+V grafu vidimo 5 držav, ki največjo količino denarja investirajo v
+turizem. Med njimi sta daleč vodilni ZDA (leta 2014 je vložila kar
+178.384 miljard\$ ) in Kitajska, ki je v letu 2014 investirala 133.159
+miljard\$ v turizem. Iz tabele lahko razberemo da ZDA predstavlja
+tolikšna vsota denarja le 6.3\% celotnih investicij, Kitajski pa 2.8\%.
+
+\begin{figure}
+
+{\centering \includegraphics{projekt_files/figure-latex/graf6-1} 
+
+}
+
+\caption{Drzave,v katerih turisti najvec trosijo}\label{fig:graf6}
+\end{figure}
+
+Iz grafa vidimo v katerih državah turisti zapravijo največ denarja, med
+njimi daleč vodilne so ZDA.V ``TOP 5'' pa se še uvrščajo Kitajska,
+Francija, Španija in Nemčija. V naslednjem zamljevidu bomo videli da so
+to tudi najbolj obiskane države.
+
+\includegraphics{projekt_files/figure-latex/zemljevid2-1.pdf}
+
+Zemljevid je narisan za leto 2013. Opazimo da najbolj obiskane države so
+bile Francija (z več kot 80 miljonov turistov), ZDA, Kitajska, Španija,
+Nemčija. In še graf, v kateremu bomo bolj točno videli kolikšno število
+ljudi vsakoletno obišče te države.
+
+\begin{figure}
+
+{\centering \includegraphics{projekt_files/figure-latex/graf7-1} 
+
+}
+
+\caption{Najvec turistov}\label{fig:graf7}
+\end{figure}
+
+Poglejmo si še podatke za Slovenijo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(Slovenija)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}lllrrrr@{}}
+\toprule
+Drzava & enota & Leto & Direktni doprinos BDP-ju & Totalni doprinos
+BDP-ju & Delez investicij v turizem & Potrosnja turistov\tabularnewline
+\midrule
+\endhead
+Slovenia & \% share & 2012 & 3.500 & 12.800 & 13.000 &
+7.800\tabularnewline
+Slovenia & \% share & 2013 & 3.600 & 13.200 & 13.600 &
+8.100\tabularnewline
+Slovenia & \% share & 2014 & 3.700 & 13.600 & 13.900 &
+8.300\tabularnewline
+Slovenia & US\$ bn & 2012 & 1.638 & 5.967 & 1.051 & 2.699\tabularnewline
+Slovenia & US\$ bn & 2013 & 1.690 & 6.116 & 1.063 & 2.843\tabularnewline
+Slovenia & US\$ bn & 2014 & 1.713 & 6.187 & 1.086 & 2.938\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(slozaposlenost)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}lllrr@{}}
+\toprule
+Drzava & enota & Leto & Direkten doprinos zaposlenosti & Totalni
+doprinos zaposlenosti\tabularnewline
+\midrule
+\endhead
+Slovenia & \% share & 2012 & 3.9 & 13.1\tabularnewline
+Slovenia & \% share & 2013 & 4.0 & 13.5\tabularnewline
+Slovenia & \% share & 2014 & 4.2 & 13.9\tabularnewline
+Slovenia & thousands & 2012 & 31.5 & 105.7\tabularnewline
+Slovenia & thousands & 2013 & 32.5 & 108.1\tabularnewline
+Slovenia & thousands & 2014 & 33.7 & 111.3\tabularnewline
+\bottomrule
+\end{longtable}
+
+V Sloveniji predstavlja turizem povprečno 3,5\% BDP-ja , skupni delež
+turizma pa je približno 13\% BDP-ja.Turistična industrija zaposluje
+povprečno 4.\% kar je 31500 ljudi,turizem v širšem smislu pa ustvari v
+povprečju 108000 delovnih mest kar predstavlja 32\% od vseh delovnih
+mest v Sloveniji. Slovenija povprečno investira 13.5\% v turizem in
+sicer okoli 1 miljard \$ turisti pa v Sloveniji zapravijo okoli 2
+miljardi dolarjev.Upoštevajoč vsa merila, se Slovenija uvršča na 76.
+mesto po tem, kako pomemben je v gospodarskem smislu turizem. Glede
+prispevka turizma v BDP pa na 63. mesto. V spodnji tabeli si lahko
+ogledamo koliko turistov je obiskalo Slovenijo. V povprečju jo obišče
+letno okoli 2 miljona turistov.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kable}\NormalTok{(Slovenija_vstop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[c]{@{}llr@{}}
+\toprule
+Drzava & Leto & Stevilo turistov\tabularnewline
+\midrule
+\endhead
+Slovenia & 2012 & 2156000\tabularnewline
+Slovenia & 2013 & 2259000\tabularnewline
+Slovenia & 2014 & 2411000\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\end{document}

@@ -2,12 +2,12 @@
 title: "Analiza gospodarskega pomena turizma in analiza najbolj obiskanih drzav"
 author: "Anamarija Mijatovic"
 output:
-  word_document: default
+  html_document: default
   pdf_document:
     includes:
       in_header: lib/styles.sty
     latex_engine: xelatex
-  html_document: default
+  word_document: default
 ---
 
 

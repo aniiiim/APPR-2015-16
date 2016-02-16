@@ -15,7 +15,10 @@ uvozi.vstop2014 <- function(){
   return(read.table("podatki/inbound1.csv",sep =";",as.is = TRUE,header=TRUE,
                     fileEncoding = "utf-8"))
 }
-
+uvozi.slo <- function(){
+  return(read.table("podatki/slovenija10.csv",sep =",",as.is = TRUE,header=TRUE,
+                    fileEncoding = "utf-8"))
+}
 library(rjson)
 require(dplyr)
 require(jsonlite)
@@ -54,6 +57,7 @@ vstop$`2013`[vstop$`2013` == vstop$`2013`[1]] <- NA
 
 vstop2014<- uvozi.vstop2014()
 pod <- uvozi.pod()
+slo10 <-uvozi.slo()
 #Urejanje tabel
 
 vstop2014  <- vstop2014[c("Destination","X2014")]
@@ -63,6 +67,22 @@ names(vstop2014)[2] <- "2014"
 vstop2014$`2014`[vstop2014$`2014`==".."] <- NA
 
 pod$Unit <- NULL
+slo10$country<- NULL
+slo10$measure<-NULL
+slo10$Unit<-NULL
+
+slo10$Date[slo10$Date=="1/1/2006 12:00:00 AM"] <- 2006
+slo10$Date[slo10$Date=="1/1/2007 12:00:00 AM"] <- 2007
+slo10$Date[slo10$Date=="1/1/2008 12:00:00 AM"] <- 2008
+slo10$Date[slo10$Date=="1/1/2009 12:00:00 AM"] <- 2009
+slo10$Date[slo10$Date=="1/1/2010 12:00:00 AM"] <- 2010
+slo10$Date[slo10$Date=="1/1/2011 12:00:00 AM"] <- 2011
+slo10$Date[slo10$Date=="1/1/2012 12:00:00 AM"] <- 2012
+slo10$Date[slo10$Date=="1/1/2013 12:00:00 AM"] <- 2013
+slo10$Date[slo10$Date=="1/1/2014 12:00:00 AM"] <- 2014
+slo10$Date[slo10$Date=="1/1/2015 12:00:00 AM"] <- 2015
+slo10$Date[slo10$Date=="1/1/2016 12:00:00 AM"] <- NA
+slo10 <- slo10[!is.na(slo10$Date),]
 
 vstop2014$`2014` <- vstop2014$`2014` %>% gsub(",", "", .) %>% gsub(" ","", .) %>% as.numeric()
 vstop2014$`2014` <- vstop2014$`2014` *1000
@@ -140,6 +160,17 @@ names(g)[4] <- "Totalni doprinos zaposlenosti"
 names(g)[3] <- "Leto"
 names(g)[2] <- "enota"
 
+h<- slo10[slo10$variable=="Travel & Tourism Total Contribution to GDP",]
+h$variable<-NULL
+names(h)[2]<-"Totalni doprinos BDP-ju"
+names(h)[1]<-"Leto"
+
+i<- slo10[slo10$variable=="Travel & Tourism Total Contribution to Employment",]
+i$variable<-NULL
+names(i)[2]<-"Totalni doprinos zaposlenosti"
+names(i)[1]<-"Leto"
+
+slo10 <- inner_join(h,i)
 tabela <- inner_join(b,f)
 tabela <- inner_join(tabela,e)
 tabela <- inner_join(tabela,d)
@@ -174,3 +205,23 @@ najvec.potrosnjev <- filter(vrednost,vrednost$`Potrosnja turistov` > 44.480)
 najvec.zaposlenostd <- filter(zaposlenostp, zaposlenostp$Drzava=="UK Virgin Islands" | zaposlenostp$Drzava=="Aruba" | zaposlenostp$Drzava=="Bahamas" | zaposlenostp$Drzava=="Seychelles" | zaposlenostp$Drzava=="Macau")
 najvec.zaposlenostt <- filter(zaposlenostp, zaposlenostp$Drzava=="Antigua and Barbuda" | zaposlenostp$Drzava=="Aruba" | zaposlenostp$Drzava=="Bahamas" | zaposlenostp$Drzava=="Seychelles" | zaposlenostp$Drzava=="Vanuatu")
 najvec.vstop <-filter(vstop2,vstop2$`Stevilo turistov` > 27437000)
+
+tabela2014$Drzava[tabela2014$Drzava== "UK"]<- "United Kingdom"
+tabela2014$Drzava[tabela2014$Drzava== "Bosnia Herzegovina"]<- "Bosnia and Herzegovina"
+tabela2014$Drzava[tabela2014$Drzava== "Serbia"]<- "Republic of Serbia"
+
+tabela2014$Drzava[tabela2014$Drzava== "Bahamas"]<- "The Bahamas"
+tabela2014$Drzava[tabela2014$Drzava== "Congo"]<- "Republic of Congo"
+tabela2014$Drzava[tabela2014$Drzava== "Democratic Republic of Congo"]<- "Democratic Republic of the Congo"
+tabela2014$Drzava[tabela2014$Drzava== "Madagasca"]<- "Madagascar"
+tabela2014$Drzava[tabela2014$Drzava== "Trinidad & Tobago "]<- "Trinidad and Tobago"
+tabela2014$Drzava[tabela2014$Drzava== "United States"]<- "United States of America"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "UK"]<- "United Kingdom"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Bosnia Herzegovina"]<- "Bosnia and Herzegovina"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Serbia"]<- "Republic of Serbia"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Bahamas"]<- "The Bahamas"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Congo"]<- "Republic of Congo"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Democratic Republic of Congo"]<- "Democratic Republic of the Congo"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Madagasca"]<- "Madagascar"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Trinidad & Tobago "]<- "Trinidad and Tobago"
+zaposlenost2014$Drzava[zaposlenost2014$Drzava== "United States"]<- "United States of America"

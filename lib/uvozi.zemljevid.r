@@ -106,5 +106,3 @@ preuredi <- function(podatki, zemljevid, stolpec, novi = NULL) {
   }
   return(out)
 }
-
-
