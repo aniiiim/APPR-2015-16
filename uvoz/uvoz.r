@@ -27,6 +27,7 @@ require(httr)
 require(XML)
 require(rvest)
 require(ggplot2)
+require(plyr)
 require(gsubfn)
 library(reshape2)
 library(tidyr)
@@ -188,6 +189,23 @@ tabela$`Potrosnja turistov` <- tabela$`Potrosnja turistov`  %>% as.numeric()
 tabela$`Delez investicij v turizem` <- tabela$`Delez investicij v turizem`  %>% as.numeric()
 
 tabela <- tabela[-c(1182,1181,1180,1194,1193,1192,1200,1199,1198,1188,1187,1186,156,155,154,684,683,682,288,287,286,708,707,706,1206,1205,1204,444,443,442,852,851,850,564,563,562,810,809,808,756,755,754,924,648,647,646,923,922,720,719,718,717,716,715,783,782,781,1132),]
+tabela$Drzava[tabela$Drzava=="G20"] <- NA
+tabela$Drzava[tabela$Drzava=="OECD"] <- NA
+tabela$Drzava[tabela$Drzava=="APEC"] <- NA
+tabela$Drzava[tabela$Drzava=="World"] <- NA
+tabela$Drzava[tabela$Drzava=="Mediterranean"] <- NA
+tabela$Drzava[tabela$Drzava=="World"] <- NA
+tabela$Drzava[tabela$Drzava=="World"] <- NA
+tabela$Drzava[tabela$Drzava=="World"] <- NA
+tabela <- tabela[!is.na(tabela$Drzava),]
+
+f$Drzava[f$Drzava=="G20"] <- NA
+f$Drzava[f$Drzava=="OECD"] <- NA
+f$Drzava[f$Drzava=="APEC"] <- NA
+f$Drzava[f$Drzava=="World"] <- NA
+f$Drzava[f$Drzava=="Mediterranean"] <- NA
+f$Drzava[f$Drzava=="World"] <- NA
+f <- f[!is.na(f$Drzava),]
 
 procenti<- filter(tabela,tabela$enota=="% share")
 procenti<-procenti[-c(361,362,363,8,7,9,70,71,72),]
@@ -206,22 +224,3 @@ najvec.zaposlenostd <- filter(zaposlenostp, zaposlenostp$Drzava=="UK Virgin Isla
 najvec.zaposlenostt <- filter(zaposlenostp, zaposlenostp$Drzava=="Antigua and Barbuda" | zaposlenostp$Drzava=="Aruba" | zaposlenostp$Drzava=="Bahamas" | zaposlenostp$Drzava=="Seychelles" | zaposlenostp$Drzava=="Vanuatu")
 najvec.vstop <-filter(vstop2,vstop2$`Stevilo turistov` > 27437000)
 
-tabela2014$Drzava[tabela2014$Drzava== "UK"]<- "United Kingdom"
-tabela2014$Drzava[tabela2014$Drzava== "Bosnia Herzegovina"]<- "Bosnia and Herzegovina"
-tabela2014$Drzava[tabela2014$Drzava== "Serbia"]<- "Republic of Serbia"
-
-tabela2014$Drzava[tabela2014$Drzava== "Bahamas"]<- "The Bahamas"
-tabela2014$Drzava[tabela2014$Drzava== "Congo"]<- "Republic of Congo"
-tabela2014$Drzava[tabela2014$Drzava== "Democratic Republic of Congo"]<- "Democratic Republic of the Congo"
-tabela2014$Drzava[tabela2014$Drzava== "Madagasca"]<- "Madagascar"
-tabela2014$Drzava[tabela2014$Drzava== "Trinidad & Tobago "]<- "Trinidad and Tobago"
-tabela2014$Drzava[tabela2014$Drzava== "United States"]<- "United States of America"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "UK"]<- "United Kingdom"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Bosnia Herzegovina"]<- "Bosnia and Herzegovina"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Serbia"]<- "Republic of Serbia"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Bahamas"]<- "The Bahamas"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Congo"]<- "Republic of Congo"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Democratic Republic of Congo"]<- "Democratic Republic of the Congo"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Madagasca"]<- "Madagascar"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "Trinidad & Tobago "]<- "Trinidad and Tobago"
-zaposlenost2014$Drzava[zaposlenost2014$Drzava== "United States"]<- "United States of America"
