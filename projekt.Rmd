@@ -2,11 +2,11 @@
 title: "Analiza gospodarskega pomena turizma in analiza najbolj obiskanih drzav"
 author: "Anamarija Mijatovic"
 output:
+  html_document: default
   pdf_document:
     includes:
       in_header: lib/styles.sty
     latex_engine: xelatex
-  html_document: default
   word_document: default
 ---
 
@@ -232,3 +232,4 @@ V 4. skupini je 12 držav, katerih delež BDP-ja se giblje med 19,5% in 9,7% zap
     +  Nigeria
 
 V zadnji skupini je 9 države, to so države, ki imajo tako delež BDP-ja kot delež zaposlenih pod 10%.
+

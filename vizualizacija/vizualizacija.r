@@ -29,8 +29,7 @@ m2 <- match(svet$name_long,obiski$Drzava)
 svet$`Stevilo turistov` <- vstop$`2013`[m2]
 svet1 <- pretvori.zemljevid(svet)
 map2 <- ggplot() + geom_polygon(data = svet1, aes(x=long,y=lat, group=group,
-                                                   fill= `Stevilo turistov`), color="grey35")+ 
+                                                  fill= `Stevilo turistov`), color="grey35")+ 
   scale_fill_continuous(low = "#69b8f6", high = "#142d45")+ xlab("") + ylab("") +
   guides(fill = guide_colorbar(title = "Stevilo turistov"))
 #print(map2)
-

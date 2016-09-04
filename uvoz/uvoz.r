@@ -19,6 +19,8 @@ uvozi.slo <- function(){
   return(read.table("podatki/slovenija10.csv",sep =",",as.is = TRUE,header=TRUE,
                     fileEncoding = "utf-8"))
 }
+
+
 library(rjson)
 require(dplyr)
 require(jsonlite)
@@ -32,22 +34,64 @@ require(gsubfn)
 library(reshape2)
 library(tidyr)
 
-a<-"http://data.worldbank.org/indicator/ST.INT.ARVL"
+
+a<-"http://databank.worldbank.org/data/inbound-tourism1/id/5ecf0c81"
 stran <- read_html(a)
+url2 <- "http://databank.worldbank.org/data/inbound-tourism2/id/e19a2023"
+stran2 <- read_html(url2)
+url3 <- "http://databank.worldbank.org/data/inbound-tourism3/id/9fa12702"
+stran3 <- read_html(url3)
+url4 <-"http://databank.worldbank.org/data/inbound-tourism4/id/bc816f61"
+stran4 <- read_html(url4)
 
 drzava <- stran %>%
- html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-country-value']//a") %>% 
+  html_nodes(xpath = "//tr[@class='dxgvDataRow_GridDefaultTheme']//td[@class='colhead dxgv mv']") %>% 
+  html_text()
+drzava2 <- stran2 %>%
+  html_nodes(xpath = "//tr[@class='dxgvDataRow_GridDefaultTheme']//td[@class='colhead dxgv mv']") %>% 
+  html_text()
+drzava3 <- stran3 %>%
+  html_nodes(xpath = "//tr[@class='dxgvDataRow_GridDefaultTheme']//td[@class='colhead dxgv mv']") %>% 
+  html_text()
+drzava4 <- stran4 %>%
+  html_nodes(xpath = "//tr[@class='dxgvDataRow_GridDefaultTheme']//td[@class='colhead dxgv mv']") %>% 
   html_text()
 
 leto2012 <- stran %>%
-  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-wbapi-data-value-2012 wbapi-data-value']") %>%
+  html_nodes(xpath = "//*[@class='dxgvDataRow_GridDefaultTheme']//td[2]") %>%
   html_text()
-  
+leto20122 <- stran2 %>%
+  html_nodes(xpath = "//*[@class='dxgvDataRow_GridDefaultTheme']//td[2]") %>%
+  html_text()
+leto20123 <- stran3 %>%
+  html_nodes(xpath = "//*[@class='dxgvDataRow_GridDefaultTheme']//td[2]") %>%
+  html_text()
+leto20124 <- stran4 %>%
+  html_nodes(xpath = "//*[@class='dxgvDataRow_GridDefaultTheme']//td[2]") %>%
+  html_text()
+
 leto2013 <- stran %>%
-  html_nodes(xpath = "//table[@class='views-table sticky-enabled cols-6']//tbody//tr[@class='odd' or @class='even']//td[@class='views-field views-field-wbapi-data-value-2013 wbapi-data-value wbapi-data-value-last']") %>%
+  html_nodes(xpath = "////*[@class='dxgvDataRow_GridDefaultTheme']//td[3]") %>%
   html_text()
-  
-vstop <- data.frame(Drzava=drzava, t=leto2012, z=leto2013)
+leto20132 <- stran2 %>%
+  html_nodes(xpath = "////*[@class='dxgvDataRow_GridDefaultTheme']//td[3]") %>%
+  html_text()
+leto20133 <- stran3 %>%
+  html_nodes(xpath = "////*[@class='dxgvDataRow_GridDefaultTheme']//td[3]") %>%
+  html_text()
+leto20134 <- stran4 %>%
+  html_nodes(xpath = "////*[@class='dxgvDataRow_GridDefaultTheme']//td[3]") %>%
+  html_text()
+
+vstop1 <- data.frame(Drzava=drzava, t=leto2012, z=leto2013)
+vstop2 <- data.frame(Drzava=drzava2, t=leto20122, z=leto20132)
+vstop3 <- data.frame(Drzava=drzava3, t=leto20123, z=leto20133)
+vstop4 <- data.frame(Drzava=drzava4, t=leto20124, z=leto20134)
+
+
+vstop<- rbind(vstop1,vstop2)
+vstop<- rbind(vstop,vstop3)
+vstop<- rbind(vstop,vstop4)
 
 names(vstop)[2] <- "2012"
 names(vstop)[3] <- "2013"
